@@ -1,0 +1,29 @@
+SSH Tunneling (Dynamic) 
+
+┌──(kali㉿kali)-[~]
+1. ssh-keygen -t rsa -b 2048   
+2. cat /home/kali/.ssh/id_rsa.pub | xclip
+
+┌──(remote㉿client-jumpbox)-[~]
+3. nano ~/.ssh/authorized_keys
+4. paste pub from kali
+5. save, and close.
+
+┌──(kali㉿kali)-[~]
+6. sudo nano /etc/proxychains.conf
+7. add 127.0.0.1 9991
+8. save and close.
+
+┌──(remote㉿client-jumpbox)-[~]
+Option 1: Regular Dynamic Port
+9. ssh -D 127.0.0.1:9991 user@client-jumpbox
+Option 2: Dynamic Port with Compression and No Interaction
+ssh -D 9991 -N -C -q user@client-jumpbox
+
+┌──(kali㉿kali)-[~]
+10. Use proxychains firefox.exe, for example.
+
+Links: 
+https://medium.com/geekculture/forwarding-burp-suite-traffic-through-socks-proxy-bada1124341c
+https://medium.com/cyberxerx/how-to-setup-proxychains-in-kali-linux-by-terminal-618e2039b663
+https://linuxize.com/post/how-to-setup-ssh-tunneling/
